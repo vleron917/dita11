@@ -7,6 +7,9 @@ $getUsers = $conn->prepare($sql);
 $getUsers->execute();
 
 $users = $getUsers->fetchAll();
+if (!isset($_SESSION['name'])){
+    header("Location: login.php");
+}
 ?>
 <div class="d-flex" style="height: 100vh">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
@@ -58,6 +61,14 @@ $users = $getUsers->fetchAll();
                     Customers
                 </a>
             </li>
+            <li>
+                <a href="logout.php" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#people-circle"></use>
+                    </svg>
+                    logout
+                </a>
+            </li>
         </ul>
         <hr>
         <div class="dropdown">
@@ -77,6 +88,7 @@ $users = $getUsers->fetchAll();
         </div>
     </div>
     <div class="w-100 h-100 p-5">
+        <h1><?php echo "Welcome" . $_SESSION['name'];?></h1>
         <table style="height: min-content;">
             <thead>
                 <th>ID</ih>

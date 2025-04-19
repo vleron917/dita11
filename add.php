@@ -4,15 +4,18 @@ include_once 'config.php';
 
 if (isset($_POST['submit'])) {
     $name = $_POST['name'];
-    $surname = $_POST['name'];
+    $surname = $_POST['surname'];
     $email = $_POST['email'];
+    $tempPass = $_POST['password'];
+    $password = password_hash($tempPass, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (name, surname, email) VALUES (:name, :surname, :email)";
+    $sql = "INSERT INTO users (name, surname, email, password) VALUES (:name, :surname, :email, :password)";
     $sqlQuery = $conn->prepare($sql);
 
     $sqlQuery->bindParam(":name", $name);
     $sqlQuery->bindParam(":surname", $surname);
     $sqlQuery->bindParam(":email", $email);
+    $sqlQuery->bindParam(":password", $password);
 
     $sqlQuery->execute();
 
@@ -34,6 +37,7 @@ if (isset($_POST['submit'])) {
         <input type="text" name="name" placeholder="Name"><br>
         <input type="text" name="surname" placeholder="Surname"><br>
         <input type="email" name="email" placeholder="Email"><br>
+        <input type="password" name="password" placeholder="password"><br>
         <input type="submit" name="submit">Submit</input>
     </form>
 
